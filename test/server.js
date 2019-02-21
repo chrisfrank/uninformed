@@ -1,19 +1,21 @@
 const express = require('express');
 const path = require('path');
+const multer = require('multer');
 
 const app = express();
 const root = path.resolve(__dirname, '..');
 
+app.use(multer().single())
+
 app.post('/input', (req, res) => {
-  console.log(req.params)
-  console.log(req.body.read())
+  let { name } = req.body || { name: 'anonymous' };
   setTimeout(() => {
-    res.json({ hello: 'world' });
-  }, 1000);
+    res.json({ hello: name });
+  }, 500);
 });
 
 app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/index.html');
+  res.sendFile(__dirname + '/client.html');
 });
 
 app.use(express.static(root));

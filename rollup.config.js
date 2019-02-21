@@ -26,7 +26,7 @@ export default [
     // `file` and `format` for each target)
   {
     input: 'src/index.js',
-    plugins: [terser()],
+    //plugins: [terser()],
     output: [
       { file: pkg.main, format: 'cjs' },
       { file: pkg.module, format: 'es' }

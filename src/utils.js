@@ -32,7 +32,8 @@ function noop(wtf) {
 export var defaultProps = {
   headers: {},
   method: 'POST',
-  onResponse: noop,
+  onError: noop,
+  onSuccess: noop,
   responseType: 'json',
   transform: noop,
 }
@@ -51,4 +52,15 @@ export function filter(props) {
     if (ok) memo[key] = props[key];
     return memo;
   }, {})
+}
+
+export function encode({ data, type }) {
+  var encoder = encoders[type] || noop;
+  return encoder(data);
+}
+
+var encoders = {
+  json: function(data) {
+    return data
+  },
 }

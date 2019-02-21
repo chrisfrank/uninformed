@@ -2,12 +2,15 @@
   "name": "uninformed",
   "version": "0.1.0",
   "description": "Uncontrolled forms for preact/react",
-  "files": ["dist"],
-  "module": "dist/main.mjs",
-  "main": "dist/main.cjs.js",
-  "browser": "dist/main.umd.js",
+  "files": [
+    "dist"
+  ],
+  "module": "dist/uninformed.mjs",
+  "main": "dist/uninformed.cjs.js",
+  "browser": "dist/uninformed.umd.js",
   "scripts": {
     "build": "rollup -c",
+    "prepare": "npm run build",
     "start": "npm run build && nodemon test/server.js",
     "test": "tap test/**/*.test.js"
   },
@@ -15,8 +18,11 @@
   "license": "ISC",
   "dependencies": {},
   "devDependencies": {
+    "body": "^5.1.0",
+    "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "htm": "^2.0.0",
+    "multer": "^1.4.1",
     "nodemon": "^1.18.10",
     "preact": "^8.4.2",
     "preact-render-to-string": "^4.1.0",
