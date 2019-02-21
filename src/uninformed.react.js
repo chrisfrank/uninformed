@@ -1,5 +1,5 @@
 import { factory } from './factory';
-import { createElement, Component } from 'react';
+import React from 'react';
 
-var Form = factory({ createElement: createElement, Component: Component });
+var Form = factory(React);
 export default Form;

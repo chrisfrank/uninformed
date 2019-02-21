@@ -1,5 +1,5 @@
 import { factory } from './factory';
-import { h, Component } from 'preact';
+import preact from 'preact';
 
-var Form = factory({ createElement: h, Component: Component });
+var Form = factory(preact);
 export default Form;
