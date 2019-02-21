@@ -1,5 +1,5 @@
-import resolve from 'rollup-plugin-node-resolve';
-import commonjs from 'rollup-plugin-commonjs';
+//import resolve from 'rollup-plugin-node-resolve';
+//import commonjs from 'rollup-plugin-commonjs';
 import { terser } from 'rollup-plugin-terser';
 import pkg from './package.json';
 
@@ -26,10 +26,26 @@ export default [
     // `file` and `format` for each target)
   {
     input: 'src/index.js',
-    external: ['react', 'preact'],
+    plugins: [terser()],
     output: [
       { file: pkg.main, format: 'cjs' },
       { file: pkg.module, format: 'es' }
     ]
-  }
+  },
+  {
+    input: 'src/uninformed.preact.js',
+    external: ['preact'],
+    output: [
+      { file: 'dist/preact.js', format: 'cjs' },
+      { file: 'dist/preact.mjs', format: 'es' },
+    ]
+  },
+  {
+    input: 'src/uninformed.react.js',
+    external: ['react'],
+    output: [
+      { file: 'dist/react.js', format: 'cjs' },
+      { file: 'dist/react.mjs', format: 'es' },
+    ]
+  },
 ];

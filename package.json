@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "description": "Uncontrolled forms for preact/react",
   "files": ["dist"],
-  "module": "dist/uninformed.esm.js",
-  "main": "dist/uninformed.cjs.js",
-  "browser": "dist/uninformed.umd.js",
+  "module": "dist/main.mjs",
+  "main": "dist/main.cjs.js",
+  "browser": "dist/main.umd.js",
   "scripts": {
     "build": "rollup -c",
     "start": "npm run build && nodemon test/server.js",
