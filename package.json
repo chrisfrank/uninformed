@@ -1,0 +1,30 @@
+{
+  "name": "uninformed",
+  "version": "0.1.0",
+  "description": "Uncontrolled forms for preact/react",
+  "files": ["dist"],
+  "module": "dist/uninformed.esm.js",
+  "main": "dist/uninformed.cjs.js",
+  "browser": "dist/uninformed.umd.js",
+  "scripts": {
+    "build": "rollup -c",
+    "start": "npm run build && nodemon test/server.js",
+    "test": "tap test/**/*.test.js"
+  },
+  "author": "Chris Frank",
+  "license": "ISC",
+  "dependencies": {},
+  "devDependencies": {
+    "express": "^4.16.4",
+    "htm": "^2.0.0",
+    "nodemon": "^1.18.10",
+    "preact": "^8.4.2",
+    "preact-render-to-string": "^4.1.0",
+    "react": "^16.8.2",
+    "react-dom": "^16.8.2",
+    "rollup": "^1.2.2",
+    "rollup-plugin-commonjs": "^9.2.0",
+    "rollup-plugin-node-resolve": "^4.0.0",
+    "rollup-plugin-terser": "^4.0.4"
+  }
+}

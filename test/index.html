@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Uinformed Test</title>
+  </head>
+  <body>
+    <script type="module">
+      import { html, render, h, Component } from '/node_modules/htm/preact/standalone.mjs';
+      import uninformed from '/dist/uninformed.esm.js';
+      const Form = uninformed({ createElement: h, Component });
+      function handleSuccess(event) {
+        console.log('success', event);
+      }
+      const App = () => html`
+        <${Form}
+          action="/input"
+          onResponse=${handleSuccess}
+        >
+          <input type="text" name="test" required />
+          <input type="submit" value="Submit" />
+        <//>
+      `
+      render(html`<${App} />`, document.body);
+    </script>
+  </body>
+</html>
