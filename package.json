@@ -2,9 +2,6 @@
   "name": "uninformed",
   "version": "0.1.0",
   "description": "Uncontrolled forms for preact/react",
-  "files": [
-    "dist"
-  ],
   "module": "dist/uninformed.mjs",
   "main": "dist/uninformed.cjs.js",
   "browser": "dist/uninformed.umd.js",
