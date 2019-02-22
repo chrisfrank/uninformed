@@ -1,6 +1,3 @@
-//import resolve from 'rollup-plugin-node-resolve';
-//import commonjs from 'rollup-plugin-commonjs';
-import { terser } from 'rollup-plugin-terser';
 import pkg from './package.json';
 
 export default [
@@ -26,7 +23,6 @@ export default [
     // `file` and `format` for each target)
   {
     input: 'src/index.js',
-    //plugins: [terser()],
     output: [
       { file: pkg.main, format: 'cjs' },
       { file: pkg.module, format: 'es' }
