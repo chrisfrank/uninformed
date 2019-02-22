@@ -7,7 +7,6 @@
   "browser": "dist/uninformed.umd.js",
   "scripts": {
     "build": "rollup -c",
-    "prepare": "npm run build",
     "start": "npm run build && nodemon test/server.js",
     "test": "tap test/**/*.test.js"
   },
