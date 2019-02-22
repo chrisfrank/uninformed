@@ -18,6 +18,10 @@ app.get('/', (req, res) => {
   res.sendFile(__dirname + '/client.html');
 });
 
+app.get('/data', (req, res) => {
+  res.json({ hello: 'world' });
+});
+
 app.use(express.static(root));
 
 app.listen(3000);

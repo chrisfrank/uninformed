@@ -25,42 +25,14 @@ export function buildResponse(request) {
   };
 }
 
-function noop(wtf) {
+export function noop(wtf) {
   return wtf;
 }
 
-export var defaultProps = {
-  headers: {},
-  method: 'POST',
-  onError: noop,
-  onSuccess: noop,
-  responseType: 'json',
-  transform: noop,
-}
-
-var privateProps = [
-  "headers",
-  "onError",
-  "onSuccess",
-  "responseType",
-  "transform",
-];
-
-export function filter(props) {
+export function filter(props, blocklist) {
   return Object.keys(props).reduce(function(memo, key) {
-    var ok = privateProps.indexOf(key) === -1;
+    var ok = blocklist.indexOf(key) === -1;
     if (ok) memo[key] = props[key];
     return memo;
   }, {})
-}
-
-export function encode({ data, type }) {
-  var encoder = encoders[type] || noop;
-  return encoder(data);
-}
-
-var encoders = {
-  json: function(data) {
-    return data
-  },
 }

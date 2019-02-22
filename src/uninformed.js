@@ -1,12 +1,19 @@
 import {
   buildRequest,
   buildResponse,
-  defaultProps,
   filter,
-  encode,
+  noop,
 } from './utils';
 
-export function factory(vdom) {
+var privateProps = [
+  "headers",
+  "onError",
+  "onSuccess",
+  "responseType",
+  "transform",
+];
+
+export function uninformed(vdom) {
   var createElement = vdom.createElement || vdom.h;
   var Component = vdom.Component;
 
@@ -33,7 +40,7 @@ export function factory(vdom) {
       });
       var req = buildRequest(props);
       var data = new FormData(event.target);
-      req.send(encode({ data, type: this.props.responseType }));
+      req.send(data);
       this.setState({ req, res: undefined });
     }
 
@@ -55,15 +62,23 @@ export function factory(vdom) {
     }
 
     render() {
-      var passedProps = Object.assign({}, filter(this.props), {
+      var passedProps = Object.assign({}, filter(this.props, privateProps), {
         onSubmit: this.handleSubmit,
-        disabled: !!this.state.req,
+        'data-disabled': !!this.state.req,
       });
 
       return createElement('form', passedProps);
     }
   }
 
-  Form.defaultProps = defaultProps;
+   Form.defaultProps = {
+    headers: {},
+    method: 'POST',
+    onError: noop,
+    onSuccess: noop,
+    responseType: 'json',
+    transform: noop,
+  };
+
   return Form;
 }

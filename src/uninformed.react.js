@@ -1,5 +1,5 @@
-import { factory } from './factory';
+import { uninformed, fetching } from './index';
 import React from 'react';
 
-var Form = factory(React);
-export default Form;
+export var Form = uninformed(React);
+export var Fetcher = fetching(React);

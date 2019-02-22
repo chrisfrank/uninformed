@@ -1,5 +1,5 @@
-import { factory } from './factory';
+import { uninformed, fetching } from './index';
 import preact from 'preact';
 
-var Form = factory(preact);
-export default Form;
+export var Form = uninformed(preact);
+export var Fetcher = fetching(preact);
