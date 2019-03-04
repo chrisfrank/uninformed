@@ -66,6 +66,13 @@
         this.handleSubmit = this.handleSubmit.bind(this);
       }
 
+      // Hack around Component Recycling in Preact <= 8 to prevent inputs from
+      // rendering with values from previous mounts.
+      // See https://github.com/developit/preact/issues/957
+      componentDidMount() {
+        this.formElement && this.formElement.reset();
+      }
+
       handleSubmit(event) {
         event.preventDefault();
 
@@ -99,19 +106,14 @@
         }
       }
 
-      // Hack around Component Recycling in Preact <= 8 to prevent inputs from
-      // rendering with values from previous mounts.
-      // See https://github.com/developit/preact/issues/957
-      componentWillUnmount() {
-        var destroy = function() {
-          this.nextBase = this.__b = null;
-        }.bind(this);
-        Promise.resolve(this).then(destroy);
+      setFormElement(ref) {
+        this.formElement = ref;
       }
 
       render() {
         var passedProps = Object.assign({}, filter(this.props, privateProps), {
           onSubmit: this.handleSubmit,
+          ref: this.setFormElement.bind(this),
           'data-disabled': !!this.state.req,
         });
 

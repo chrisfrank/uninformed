@@ -41,7 +41,11 @@ function PreactApp(props) {
         >
           <fieldset>
             <h1>Preact Form</h1>
-            <input type="text" name="name" key=${this.state.visible} />
+            <input
+            type="text"
+            name="name"
+            defaultValue="PREACT"
+            />
             <input type="submit" value="Submit" />
             <${Fetcher}
               url="/data"
@@ -77,7 +81,11 @@ class ReactApp extends React.Component {
             transform=${xform}
           >
             <h1>React Form</h1>
-            <input type="text" name="name" />
+            <input
+              type="text"
+              name="name"
+              defaultValue="REACT"
+            />
             <input type="submit" value="Submit" />
           <//>
         `}
