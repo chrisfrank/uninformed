@@ -20,39 +20,70 @@ function xform(res) {
   return res.ok ? res.body.hello : res.status
 }
 
-function PreactApp() {
-  return html`
-    <${PreactForm}
-      action="/input"
-      onSuccess=${handleSuccess}
-      onError=${handleError}
-      transform=${xform}
-    >
-      <h1>Preact Form</h1>
-      <input type="text" name="name" />
-      <input type="submit" value="Submit" />
-      <${Fetcher}
-        url="/data"
-        transform=${xform}
-        render=${data => html`<h2>fetched ${data}</h2>`}
-      />
-    <//>
-  `
+function handleToggle(event) {
+  event.preventDefault()
+  this.setState(state => ({ visible: !state.visible }))
 }
 
-function ReactApp() {
-  return jsx`
-    <${ReactForm}
-      action="/input"
-      onSuccess=${handleSuccess}
-      onError=${handleError}
-      transform=${xform}
-    >
-      <h1>React Form</h1>
-      <input type="text" name="name" />
-      <input type="submit" value="Submit" />
-    <//>
-  `
+function PreactApp(props) {
+  this.handleToggle = handleToggle.bind(this);
+
+  return html`
+    <div>
+      <button onClick=${this.handleToggle}>Toggle</button>
+      ${this.state.visible && html`
+        <${PreactForm}
+          action="/input"
+          key=${this.state.visible}
+          onSuccess=${handleSuccess}
+          onError=${handleError}
+          transform=${xform}
+        >
+          <fieldset>
+            <h1>Preact Form</h1>
+            <input type="text" name="name" key=${this.state.visible} />
+            <input type="submit" value="Submit" />
+            <${Fetcher}
+              url="/data"
+              transform=${xform}
+              render=${data => html`<h2>fetched ${data}</h2>`}
+            />
+          </fieldset>
+        <//>
+      `}
+    </div>
+  `;
+}
+
+class ReactApp extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      visible: true,
+    }
+
+    this.handleToggle = handleToggle.bind(this);
+  }
+
+  render() {
+    return jsx`
+      <div>
+        <button onClick=${this.handleToggle}>Toggle</button>
+        ${this.state.visible && jsx`
+          <${ReactForm}
+            action="/input"
+            onSuccess=${handleSuccess}
+            onError=${handleError}
+            transform=${xform}
+          >
+            <h1>React Form</h1>
+            <input type="text" name="name" />
+            <input type="submit" value="Submit" />
+          <//>
+        `}
+      </div>
+    `
+  }
 }
 
 preact.render(html`<${PreactApp} />`, document.getElementById('preact-root'));

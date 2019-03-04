@@ -99,6 +99,16 @@
         }
       }
 
+      // Hack around Component Recycling in Preact <= 8 to prevent inputs from
+      // rendering with values from previous mounts.
+      // See https://github.com/developit/preact/issues/957
+      componentWillUnmount() {
+        var destroy = function() {
+          this.nextBase = this.__b = null;
+        }.bind(this);
+        Promise.resolve(this).then(destroy);
+      }
+
       render() {
         var passedProps = Object.assign({}, filter(this.props, privateProps), {
           onSubmit: this.handleSubmit,
