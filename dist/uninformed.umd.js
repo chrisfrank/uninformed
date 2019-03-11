@@ -75,6 +75,7 @@
 
       handleSubmit(event) {
         event.preventDefault();
+        this.props.onSubmit(event);
 
         // to prevent double-submissions, disable immediately, not via setState
         if (this.disabled) return;
@@ -121,10 +122,11 @@
       }
     }
 
-     Form.defaultProps = {
+    Form.defaultProps = {
       headers: {},
       method: 'POST',
       onError: noop,
+      onSubmit, noop,
       onSuccess: noop,
       responseType: 'json',
       transform: noop,
