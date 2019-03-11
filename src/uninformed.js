@@ -37,7 +37,6 @@ export function uninformed(vdom) {
 
     handleSubmit(event) {
       event.preventDefault();
-      this.props.onSubmit(event);
 
       // to prevent double-submissions, disable immediately, not via setState
       if (this.disabled) return;
@@ -50,6 +49,7 @@ export function uninformed(vdom) {
       var data = new FormData(event.target);
       req.send(data);
       this.setState({ req, res: undefined });
+      this.props.onSubmit(event);
     }
 
     handleLoad(event) {
