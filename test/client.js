@@ -36,6 +36,7 @@ function PreactApp(props) {
           action="/input"
           key=${this.state.visible}
           onSuccess=${handleSuccess}
+          onSubmit=${e => console.log('submitted', e) }
           onError=${handleError}
           transform=${xform}
         >
@@ -77,6 +78,7 @@ class ReactApp extends React.Component {
           <${ReactForm}
             action="/input"
             onSuccess=${handleSuccess}
+            onSubmit=${e => console.log('submitted', e) }
             onError=${handleError}
             transform=${xform}
           >

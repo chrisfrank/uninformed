@@ -88,7 +88,7 @@ export function uninformed(vdom) {
     headers: {},
     method: 'POST',
     onError: noop,
-    onSubmit, noop,
+    onSubmit: noop,
     onSuccess: noop,
     responseType: 'json',
     transform: noop,
