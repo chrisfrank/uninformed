@@ -1,7 +1,7 @@
 import {
   buildRequest,
   buildResponse,
-  filter,
+  removeBlocklistedProps,
   noop,
 } from './utils';
 
@@ -74,11 +74,15 @@ export function uninformed(vdom) {
     }
 
     render() {
-      var passedProps = Object.assign({}, filter(this.props, privateProps), {
-        onSubmit: this.handleSubmit,
-        ref: this.setFormElement.bind(this),
-        'data-disabled': !!this.state.req,
-      });
+      var passedProps = Object.assign(
+        {},
+        removeBlocklistedProps(this.props, privateProps),
+        {
+          onSubmit: this.handleSubmit,
+          ref: this.setFormElement.bind(this),
+          'data-disabled': !!this.state.req,
+        }
+      );
 
       return createElement('form', passedProps);
     }

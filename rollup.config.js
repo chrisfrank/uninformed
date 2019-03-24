@@ -28,20 +28,4 @@ export default [
       { file: pkg.module, format: 'es' }
     ]
   },
-  {
-    input: 'src/uninformed.preact.js',
-    external: ['preact'],
-    output: [
-      { file: 'dist/preact.js', format: 'cjs' },
-      { file: 'dist/preact.mjs', format: 'es' },
-    ]
-  },
-  {
-    input: 'src/uninformed.react.js',
-    external: ['react'],
-    output: [
-      { file: 'dist/react.js', format: 'cjs' },
-      { file: 'dist/react.mjs', format: 'es' },
-    ]
-  },
 ];

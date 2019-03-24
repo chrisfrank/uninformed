@@ -1,10 +1,14 @@
+export function noop(wtf) {
+  return wtf;
+}
+
 export function buildRequest({
-  data,
-  headers,
-  method,
-  onLoad,
-  responseType,
   url,
+  data,
+  headers = {},
+  method = "GET",
+  onLoad = noop,
+  responseType = "json",
 }) {
   let req = new XMLHttpRequest();
   req.responseType = responseType;
@@ -25,11 +29,7 @@ export function buildResponse(request) {
   };
 }
 
-export function noop(wtf) {
-  return wtf;
-}
-
-export function filter(props, blocklist) {
+export function removeBlocklistedProps(props, blocklist) {
   return Object.keys(props).reduce(function(memo, key) {
     var ok = blocklist.indexOf(key) === -1;
     if (ok) memo[key] = props[key];

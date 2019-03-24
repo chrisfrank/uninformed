@@ -1,18 +1,14 @@
-'use strict';
-
-Object.defineProperty(exports, '__esModule', { value: true });
-
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
-
-var React = _interopDefault(require('react'));
+function noop(wtf) {
+  return wtf;
+}
 
 function buildRequest({
-  data,
-  headers,
-  method,
-  onLoad,
-  responseType,
   url,
+  data,
+  headers = {},
+  method = "GET",
+  onLoad = noop,
+  responseType = "json",
 }) {
   let req = new XMLHttpRequest();
   req.responseType = responseType;
@@ -33,11 +29,7 @@ function buildResponse(request) {
   };
 }
 
-function noop(wtf) {
-  return wtf;
-}
-
-function filter(props, blocklist) {
+function removeBlocklistedProps(props, blocklist) {
   return Object.keys(props).reduce(function(memo, key) {
     var ok = blocklist.indexOf(key) === -1;
     if (ok) memo[key] = props[key];
@@ -114,11 +106,15 @@ function uninformed(vdom) {
     }
 
     render() {
-      var passedProps = Object.assign({}, filter(this.props, privateProps), {
-        onSubmit: this.handleSubmit,
-        ref: this.setFormElement.bind(this),
-        'data-disabled': !!this.state.req,
-      });
+      var passedProps = Object.assign(
+        {},
+        removeBlocklistedProps(this.props, privateProps),
+        {
+          onSubmit: this.handleSubmit,
+          ref: this.setFormElement.bind(this),
+          'data-disabled': !!this.state.req,
+        }
+      );
 
       return createElement('form', passedProps);
     }
@@ -137,89 +133,4 @@ function uninformed(vdom) {
   return Form;
 }
 
-function fetching(vdom) {
-  var createElement = vdom.createElement || vdom.h;
-  var Component = vdom.Component;
-
-  class Fetcher extends Component {
-    constructor(props) {
-      super(props);
-      this.state = {
-        req: null,
-        res: null,
-      };
-      this.handleLoad = this.handleLoad.bind(this);
-      this.send = this.send.bind(this);
-      this.seedResponse = () => {
-        var { seed, transform } = this.props;
-        return (
-          seed &&
-          transform({
-            body: seed,
-            headers: {},
-            ok: true,
-            status: 202,
-          })
-        );
-      };
-    }
-
-    handleLoad(event) {
-      var res = buildResponse(event.target);
-      this.setState({
-        req: undefined,
-        res: this.props.transform(res),
-      });
-    }
-
-    send() {
-      var props = Object.assign({}, this.props, { onLoad: this.handleLoad });
-      var req = buildRequest(props);
-      var body = this.props.method === 'GET' ? undefined : this.props.seed;
-      req.send(body);
-      this.setState({ req });
-    }
-
-    componentDidMount() {
-      this.setState({ res: this.seedResponse() });
-      this.send();
-    }
-
-    componentDidUpdate(prevProps, prevState) {
-      var { url, onResponse } = this.props;
-      var { res } = this.state;
-
-      // refetch if URL has changed
-      if (url !== prevProps.url) this.send();
-
-      // trigger onResponse callback if response has changed
-      if (res && res !== prevState.res) {
-        onResponse(res);
-      }
-    }
-
-    render() {
-      var { res } = this.state;
-      return res ? this.props.render(res) : null;
-    }
-  }
-
-  Fetcher.defaultProps = {
-    headers: {},
-    onResponse: noop,
-    method: "GET",
-    render: noop,
-    responseType: "json",
-    transform: noop,
-    seed: undefined, // object
-    url: undefined, // string
-  };
-
-  return Fetcher;
-}
-
-var Form = uninformed(React);
-var Fetcher = fetching(React);
-
-exports.Form = Form;
-exports.Fetcher = Fetcher;
+export { uninformed, buildRequest, buildResponse };
