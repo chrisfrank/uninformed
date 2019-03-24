@@ -11,7 +11,7 @@ function buildRequest({
   data,
   headers = {},
   method = "GET",
-  onLoad = noop,
+  onload = noop,
   responseType = "json",
 }) {
   let req = new XMLHttpRequest();
@@ -20,7 +20,7 @@ function buildRequest({
   Object.keys(headers).forEach(key => {
     req.setRequestHeader(key, headers[key]);
   });
-  req.onload = onLoad;
+  req.onload = onload;
   return req;
 }
 
@@ -79,7 +79,7 @@ function uninformed(vdom) {
       this.disabled = true;
       var props = Object.assign({}, this.props, {
         url: this.props.action,
-        onLoad: this.handleLoad,
+        onload: this.handleLoad,
       });
       var req = buildRequest(props);
       var data = new FormData(event.target);

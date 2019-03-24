@@ -7,7 +7,7 @@ export function buildRequest({
   data,
   headers = {},
   method = "GET",
-  onLoad = noop,
+  onload = noop,
   responseType = "json",
 }) {
   let req = new XMLHttpRequest();
@@ -16,7 +16,7 @@ export function buildRequest({
   Object.keys(headers).forEach(key => {
     req.setRequestHeader(key, headers[key]);
   });
-  req.onload = onLoad;
+  req.onload = onload;
   return req;
 }
 

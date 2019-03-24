@@ -12,7 +12,6 @@
   },
   "author": "Chris Frank",
   "license": "ISC",
-  "dependencies": {},
   "devDependencies": {
     "body": "^5.1.0",
     "body-parser": "^1.18.3",
@@ -20,10 +19,12 @@
     "htm": "^2.0.0",
     "multer": "^1.4.1",
     "nodemon": "^1.18.10",
-    "preact": "^8.4.2",
     "preact-render-to-string": "^4.1.0",
     "react": "^16.8.2",
     "react-dom": "^16.8.2",
     "rollup": "^1.2.2"
+  },
+  "dependencies": {
+    "preact": "^8.4.2"
   }
 }

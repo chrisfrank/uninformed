@@ -43,7 +43,7 @@ export function uninformed(vdom) {
       this.disabled = true;
       var props = Object.assign({}, this.props, {
         url: this.props.action,
-        onLoad: this.handleLoad,
+        onload: this.handleLoad,
       });
       var req = buildRequest(props);
       var data = new FormData(event.target);
