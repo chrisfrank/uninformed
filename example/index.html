@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Uninformed</title>
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/htm"></script>
+    <script src="../dist/uninformed.umd.js"></script>
+  </head>
+  <body>
+    <div id="app">
+    </div>
+    <script>
+      const html = htm.bind(React);
+      class MyForm extends uninformed.Form {
+      }
+
+      ReactDOM.render(html`<${MyForm} />`, document.getElementById('app'))
+    </script>
+  </body>
+</html>

@@ -1,0 +1,7 @@
+browser: false
+color: true
+coverage: false
+jobs: 4
+jsx: false
+ts: false
+

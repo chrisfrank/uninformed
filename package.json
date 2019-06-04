@@ -2,29 +2,39 @@
   "name": "uninformed",
   "version": "0.1.0",
   "description": "Uncontrolled forms for preact/react",
-  "module": "dist/uninformed.module.js",
+  "module": "dist/uninformed.esm.js",
   "main": "dist/uninformed.cjs.js",
   "browser": "dist/uninformed.umd.js",
+  "files": [
+    "dist",
+    "src"
+  ],
   "scripts": {
     "build": "rollup -c",
-    "start": "npm run build && nodemon test/server.js",
+    "start": "npm run build && nodemon example/server.js",
     "test": "tap test/**/*.test.js"
   },
   "author": "Chris Frank",
   "license": "ISC",
   "devDependencies": {
-    "body": "^5.1.0",
-    "body-parser": "^1.18.3",
-    "express": "^4.16.4",
-    "htm": "^2.0.0",
-    "multer": "^1.4.1",
-    "nodemon": "^1.18.10",
-    "preact-render-to-string": "^4.1.0",
+    "@babel/core": "^7.4.5",
+    "@babel/preset-env": "^7.4.5",
+    "busboy": "^0.3.1",
+    "enzyme": "^3.9.0",
+    "enzyme-adapter-react-16": "^1.13.2",
+    "formidable": "^1.2.1",
+    "htm": "^2.1.1",
+    "jsdom": "^15.1.1",
+    "nodemon": "^1.19.1",
+    "prettier": "^1.17.1",
+    "qs": "^6.7.0",
     "react": "^16.8.2",
     "react-dom": "^16.8.2",
-    "rollup": "^1.2.2"
-  },
-  "dependencies": {
-    "preact": "^8.4.2"
+    "rollup": "^1.2.2",
+    "rollup-plugin-babel": "^4.3.2",
+    "rollup-plugin-terser": "^5.0.0",
+    "sinon": "^7.3.2",
+    "tap": "^14.2.0",
+    "xhr-mock": "^2.4.1"
   }
 }

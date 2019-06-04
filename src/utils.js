@@ -1,38 +1,21 @@
-export function noop(wtf) {
-  return wtf;
+export function noop() {}
+
+export function serializeWithFormData(form) {
+  return new FormData(form);
 }
 
-export function buildRequest({
-  url,
-  data,
-  headers = {},
-  method = "GET",
-  onload = noop,
-  responseType = "json",
-}) {
-  let req = new XMLHttpRequest();
-  req.responseType = responseType;
-  req.open(method, url, true);
-  Object.keys(headers).forEach(key => {
-    req.setRequestHeader(key, headers[key]);
+export function sendWithXHR({ data, method, url, prepare = noop }) {
+  return new Promise((resolve, reject) => {
+    let req = new XMLHttpRequest();
+    req.open(method, url, true);
+    prepare(req);
+    req.onreadystatechange = function() {
+      if (req.readyState !== 4) return;
+
+      req.status >= 200 && req.status <= 300 ? resolve(req) : reject(req);
+    };
+    req.send(data);
   });
-  req.onload = onload;
-  return req;
 }
 
-export function buildResponse(request) {
-  return {
-    body: request.response,
-    headers: request.getAllResponseHeaders(),
-    ok: request.status < 300,
-    status: request.status,
-  };
-}
-
-export function removeBlocklistedProps(props, blocklist) {
-  return Object.keys(props).reduce(function(memo, key) {
-    var ok = blocklist.indexOf(key) === -1;
-    if (ok) memo[key] = props[key];
-    return memo;
-  }, {})
-}
+export function validateWithFaith() { return true; }
