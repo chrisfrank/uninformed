@@ -18,8 +18,8 @@ export default [
         format: 'umd',
         globals: { 'react': 'React' },
       },
+      { file: pkg.module, format: 'es' },
       { file: pkg.main, format: 'cjs' },
-      { file: pkg.module, format: 'es' }
     ],
     plugins,
   },

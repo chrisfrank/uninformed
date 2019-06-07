@@ -4,4 +4,4 @@ coverage: false
 jobs: 4
 jsx: false
 ts: false
-
+reporter: spec

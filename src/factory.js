@@ -1,9 +1,4 @@
-import {
-  noop,
-  serializeWithFormData,
-  sendWithXHR,
-  validateWithFaith
-} from "./utils";
+import { noop, serializers, sendWithXHR } from "./utils";
 
 export function createForm(vdom) {
   const Component = vdom.Component;
@@ -20,26 +15,41 @@ export function createForm(vdom) {
       this.handleError = this.handleError.bind(this);
     }
 
+    get enctype() {
+      return this.props.enctype || this.props.encType;
+    }
+
+    get method() {
+      return this.props.method.toUpperCase();
+    }
+
     handleSubmit(event) {
       event.preventDefault();
       if (this.state.disabled) return;
 
-      const {
-        action,
-        method,
-        onSubmit,
-        send,
-        serialize,
-        validate
-      } = this.props;
-      const data = serialize(this.formElement);
-      if (!validate(data)) return;
+      const { action, serialize, onSubmit, send, beforeSend } = this.props;
+      const serializer = serialize || serializers[this.enctype];
+      if (!serializer) {
+        throw `No serializer for enctype type "${this.enctype}!"`;
+      }
+      const payload = serializer(this.formElement);
+      if (onSubmit(event, payload) === false) return;
+
       this.setState({ disabled: true });
 
-      onSubmit(data);
-      send({ data, method: method.toUpperCase(), url: action })
-        .then(this.handleSuccess)
-        .catch(this.handleError);
+      if (send) {
+        send(payload, this).then(this.handleSuccess).catch(this.handleError);
+      } else {
+        sendWithXHR({
+          body: payload,
+          contentType: this.enctype,
+          method: this.method,
+          onError: this.handleError,
+          onSuccess: this.handleSuccess,
+          beforeSend,
+          url: action
+        });
+      }
     }
 
     handleSuccess(response) {
@@ -62,7 +72,8 @@ export function createForm(vdom) {
           return props;
         },
         {
-          "data-disabled": disabled,
+          disabled,
+          encType: this.enctype,
           onSubmit: this.handleSubmit,
           ref: elem => (this.formElement = elem)
         }
@@ -73,27 +84,25 @@ export function createForm(vdom) {
   }
 
   Form.defaultProps = {
+    beforeSend: noop,
+    encType: "application/x-www-form-urlencoded",
     method: "POST",
     onError: noop,
     onSubmit: noop,
-    onSuccess: noop,
-    send: sendWithXHR,
-    serialize: serializeWithFormData,
-    validate: validateWithFaith
+    onSuccess: noop
   };
 
   return Form;
 }
 
 const BLOCKLIST = new Set([
+  "beforeSend",
+  "enctype",
   "onError",
   "onSubmit",
   "onSuccess",
   "send",
   "serialize",
-  "validate",
   "ref",
   "data-disabled"
 ]);
-
-export { sendWithXHR, serializeWithFormData };

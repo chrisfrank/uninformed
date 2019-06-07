@@ -4,7 +4,7 @@ import { shallow } from 'enzyme';
 import { html } from './helper';
 import { createForm } from '../dist/factory';
 
-tap.test('it creates a Form component that can render without crashing', t => {
+tap.test('it creates a Form component', t => {
   const Form = createForm(React);
   const dom = shallow(
     html`
@@ -13,6 +13,6 @@ tap.test('it creates a Form component that can render without crashing', t => {
       <//>
     `
   )
-  t.assert(dom.find('form').length, 1)
+  t.equal(dom.find('form').length, 1, 'rendered without crashing')
   t.end()
 })

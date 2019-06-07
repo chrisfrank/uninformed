@@ -2,9 +2,13 @@
   "name": "uninformed",
   "version": "0.1.0",
   "description": "Uncontrolled forms for preact/react",
-  "module": "dist/uninformed.esm.js",
+  "module": "dist/uninformed.js",
   "main": "dist/uninformed.cjs.js",
   "browser": "dist/uninformed.umd.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chrisfrank/uninformed.git"
+  },
   "files": [
     "dist",
     "src"
@@ -22,7 +26,9 @@
     "busboy": "^0.3.1",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.13.2",
-    "formidable": "^1.2.1",
+    "express": "^4.17.1",
+    "express-busboy": "^7.0.1",
+    "form-serialize": "^0.7.2",
     "htm": "^2.1.1",
     "jsdom": "^15.1.1",
     "nodemon": "^1.19.1",

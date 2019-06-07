@@ -2,7 +2,7 @@
 //
 const html = htm.bind(React.createElement);
 
-class MyForm extends React.Component {
+class FormController extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -10,8 +10,8 @@ class MyForm extends React.Component {
       status: undefined,
     }
 
-    this.handleSubmit = event => {
-      console.log('submitted!', event)
+    this.handleSubmit = (event, payload) => {
+      console.log('submitted!', event, payload)
     }
 
     this.handleError = res => {
@@ -24,49 +24,20 @@ class MyForm extends React.Component {
       this.setState({ status: res.status, body: res.responseText })
     }
   }
-
   render() {
+    const { title, ...rest } = this.props;
     return html`
-      <div id="example">
-        <style type="text/css">
-          #example { font-family: menlo, monospace; }
-          label { display: block; }
-        </style>
-        <h1>Stock form</h1>
+      <div>
+        <h2>${title}</h2>
         <${uninformed.Form}
-          action="/submissions"
+          ...${rest}
           onSuccess=${this.handleSuccess}
           onError=${this.handleError}
           onSubmit=${this.handleSubmit}
         >
-          <p>
-            <label>Title</label>
-            <input type="text" name="title" />
-          </p>
-          <p>
-            <label>Address (city)</label>
-            <input type="text" name="address[city]" />
-          </p>
-          <p>
-            <label>Address (state)</label>
-            <input type="text" name="address[state]" />
-          </p>
-          <p>
-            <h3>Tags</h3>
-            <label>
-              <input type="checkbox" value="East" name="tags[]" />
-               East
-             </label>
-            <label>
-              <input type="checkbox" value="West" name="tags[]" />
-               West
-             </label>
-           </p>
-          <p>
-            <button type="submit">Send</button>
-          </p>
+          <${Inputs} />
         <//>
-        <h2>Last response:</h2>
+        <h2>last response:</h2>
         <p>
           ${this.state.body}
         </p>
@@ -75,4 +46,86 @@ class MyForm extends React.Component {
   }
 }
 
-ReactDOM.render(html`<${MyForm} />`, document.getElementById('app'))
+function Inputs() {
+  return html`
+    <fieldset>
+      <p>
+        <label>Title</label>
+        <input type="text" name="title" />
+      </p>
+      <p>
+        <label>Status</label>
+        <select name="status">
+          <option value="published">Published</option>
+          <option value="draft">Draft</option>
+        </select>
+      </p>
+      <p>
+        <label>Categories</label>
+        <select multiple name="categories[]">
+          <option value="art">Art</option>
+          <option value="life">Life</option>
+        </select>
+      </p>
+      <p>
+        <label>Author (email)</label>
+        <input type="text" name="author[email]" />
+      </p>
+      <div>
+        <h3>Tags</h3>
+        <label>
+          <input type="checkbox" value="East" name="tags[]" />
+           East
+         </label>
+        <label>
+          <input type="checkbox" value="West" name="tags[]" />
+           West
+         </label>
+      </div>
+      <p>
+        <button type="submit">Send</button>
+      </p>
+    <//>
+  `
+}
+
+function Client() {
+  return html`
+    <div style=${{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
+      <${FormController}
+        title="Stock"
+        action="/submissions"
+        serialize=${uninformed.serializeWithFormElements}
+        send=${props => {
+          uninformed.sendWithXHR({
+            ...props,
+            prepare: xhr => {
+          xhr.setRequestHeader('Content-Type', "application/x-www-form-urlencoded")
+            }
+          })
+        }}
+      />
+      <${FormController}
+        title="Custom"
+        action="https://jsonplaceholder.typicode.com/posts"
+        serialize=${(form) => {
+          const input = Array.from(new FormData(form)).reduce((data, [key, val]) => {
+            if (key && val) data[key] = val;
+            return data
+          }, {})
+          return JSON.stringify(input);
+        }}
+        send=${(req) => {
+          fetch(req.url, {
+            method: req.method,
+            body: req.body,
+            headers: { 'Content-Type': 'application/json' }
+          }).then(res => res.text())
+            .then(responseText => req.onSuccess({ responseText }))
+        }}
+      />
+    </div>
+  `
+}
+
+ReactDOM.render(html`<${Client} />`, document.getElementById('app'))
