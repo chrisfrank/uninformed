@@ -12,7 +12,7 @@ export function serializeToArray(form) {
     if (!name) return;
     if (/checkbox|radio/i.test(input.type) && !input.checked) return
     if ('selected' in input && !input.selected) return;
-    return [encodeURIComponent(name), encodeURIComponent(input.value)]
+    return [name, input.value]
   }
 
   function recursivelyParseInputs(elements = form.elements, key) {
@@ -34,7 +34,9 @@ export function serializeToArray(form) {
 export const serializers = {
   "application/x-www-form-urlencoded": form => {
     const fields = serializeToArray(form);
-    return fields.map(([key, val]) => `${key}=${val}`).join('&')
+    return fields.map(([key, val]) => (
+      `${encodeURIComponent(key)}=${encodeURIComponent(val)}`
+    )).join('&')
   },
   "application/json": form => {
     const fields = serializeToArray(form);

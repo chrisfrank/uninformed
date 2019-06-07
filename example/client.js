@@ -95,34 +95,11 @@ function Client() {
       <${FormController}
         title="Stock"
         action="/submissions"
-        serialize=${uninformed.serializeWithFormElements}
-        send=${props => {
-          uninformed.sendWithXHR({
-            ...props,
-            prepare: xhr => {
-          xhr.setRequestHeader('Content-Type', "application/x-www-form-urlencoded")
-            }
-          })
-        }}
       />
       <${FormController}
-        title="Custom"
+        title="JSON"
         action="https://jsonplaceholder.typicode.com/posts"
-        serialize=${(form) => {
-          const input = Array.from(new FormData(form)).reduce((data, [key, val]) => {
-            if (key && val) data[key] = val;
-            return data
-          }, {})
-          return JSON.stringify(input);
-        }}
-        send=${(req) => {
-          fetch(req.url, {
-            method: req.method,
-            body: req.body,
-            headers: { 'Content-Type': 'application/json' }
-          }).then(res => res.text())
-            .then(responseText => req.onSuccess({ responseText }))
-        }}
+        enctype="application/json"
       />
     </div>
   `
