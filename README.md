@@ -1,29 +1,24 @@
 # Uninformed
 
-Stupid simple forms for React and Preact
-
-## Why?
-
-[Controlled Components](https://reactjs.org/docs/forms.html#controlled-components)
-are wonderful for building complex forms, but they can make building simple
-forms complicated. Sometimes I just want my form library to do two things:
-
-- [x] Prevent double-submissions
-- [x] Send data to the server without refreshing the page
-
-Is that too much to ask?
-
-## How?
-
-### Install the package:
+Nostalgically simple forms for React and Preact
 
 ```
 npm install uninformed
 ```
 
-You’ll also need either React >= 16 or Preact >= 8.)
+You’ll also need either React >= 16 or Preact >= 8.
 
-### Use a form:
+## Why?
+
+Forms in Rails do two useful things by default:
+
+- [x] Send data to the server without refreshing the page
+- [x] Prevent accidental double-submissions
+
+Uninformed is a tiny library that brings these defaults to the React/Preact
+ecosystem.
+
+### Getting started:
 
 ```jsx
 import { Form } from 'uninformed';
@@ -37,7 +32,7 @@ export const SignupForm = () => (
 )
 ```
 
-That’s it! No onChange handlers, no render-props, just a lightly-enhanced
+That’s it! No `onChange` handlers, no `render` props, just a lightly-enhanced
 HTML form that disables itself on submit, sends data to a server via AJAX, and
 re-enables itself after the server responds.
 
