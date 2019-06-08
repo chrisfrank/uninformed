@@ -1,4 +1,4 @@
-import { noop, serializers, sendWithXHR } from "./utils";
+import { noop, serializers, sendWithXHR } from './utils';
 
 export function createForm(vdom) {
   const Component = vdom.Component;
@@ -8,7 +8,7 @@ export function createForm(vdom) {
     constructor(props) {
       super(props);
       this.state = {
-        disabled: false
+        disabled: false,
       };
       this.handleSubmit = this.handleSubmit.bind(this);
       this.handleSuccess = this.handleSuccess.bind(this);
@@ -38,7 +38,9 @@ export function createForm(vdom) {
       this.setState({ disabled: true });
 
       if (send) {
-        send(payload, this).then(this.handleSuccess).catch(this.handleError);
+        send(payload, this)
+          .then(this.handleSuccess)
+          .catch(this.handleError);
       } else {
         sendWithXHR({
           body: payload,
@@ -47,7 +49,7 @@ export function createForm(vdom) {
           onError: this.handleError,
           onSuccess: this.handleSuccess,
           beforeSend,
-          url: action
+          url: action,
         });
       }
     }
@@ -75,34 +77,34 @@ export function createForm(vdom) {
           disabled,
           encType: this.enctype,
           onSubmit: this.handleSubmit,
-          ref: elem => (this.formElement = elem)
+          ref: elem => (this.formElement = elem),
         }
       );
 
-      return createElement("form", passedProps, this.props.children);
+      return createElement('form', passedProps, this.props.children);
     }
   }
 
   Form.defaultProps = {
     beforeSend: noop,
-    encType: "application/x-www-form-urlencoded",
-    method: "POST",
+    encType: 'application/x-www-form-urlencoded',
+    method: 'POST',
     onError: noop,
     onSubmit: noop,
-    onSuccess: noop
+    onSuccess: noop,
   };
 
   return Form;
 }
 
 const BLOCKLIST = new Set([
-  "beforeSend",
-  "enctype",
-  "onError",
-  "onSubmit",
-  "onSuccess",
-  "send",
-  "serialize",
-  "ref",
-  "data-disabled"
+  'beforeSend',
+  'enctype',
+  'onError',
+  'onSubmit',
+  'onSuccess',
+  'send',
+  'serialize',
+  'ref',
+  'data-disabled',
 ]);

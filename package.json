@@ -15,6 +15,7 @@
   ],
   "scripts": {
     "build": "rollup -c",
+    "lint": "prettier src/**/*.js --write --single-quote --trailing-comma es5",
     "start": "npm run build && nodemon example/server.js",
     "test": "tap test/**/*.test.js"
   },
@@ -40,7 +41,7 @@
     "htm": "^2.1.1",
     "jsdom": "^15.1.1",
     "nodemon": "^1.19.1",
-    "prettier": "^1.17.1",
+    "prettier": "^1.18.2",
     "qs": "^6.7.0",
     "react": "^16.8.2",
     "react-dom": "^16.8.2",

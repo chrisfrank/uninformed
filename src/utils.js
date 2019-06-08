@@ -10,16 +10,16 @@ export function serializeToArray(form) {
   function parseInput(input, key) {
     const name = key || input.name;
     if (!name) return;
-    if (/checkbox|radio/i.test(input.type) && !input.checked) return
+    if (/checkbox|radio/i.test(input.type) && !input.checked) return;
     if ('selected' in input && !input.selected) return;
-    return [name, input.value]
+    return [name, input.value];
   }
 
   function recursivelyParseInputs(elements = form.elements, key) {
     for (let i = 0; i < elements.length; i += 1) {
       const elem = elements[i];
       if (elem.options) {
-        recursivelyParseInputs(elem.options, elem.name)
+        recursivelyParseInputs(elem.options, elem.name);
       } else {
         const pair = parseInput(elem, key);
         pair && fields.push(pair);
@@ -32,23 +32,24 @@ export function serializeToArray(form) {
 }
 
 export const serializers = {
-  "application/x-www-form-urlencoded": form => {
+  'application/x-www-form-urlencoded': form => {
     const fields = serializeToArray(form);
-    return fields.map(([key, val]) => (
-      `${encodeURIComponent(key)}=${encodeURIComponent(val)}`
-    )).join('&')
+    return fields
+      .map(
+        ([key, val]) => `${encodeURIComponent(key)}=${encodeURIComponent(val)}`
+      )
+      .join('&');
   },
-  "application/json": form => {
+  'application/json': form => {
     const fields = serializeToArray(form);
     const data = fields.reduce((memo, [key, val]) => {
       memo[key] = val;
       return memo;
-    }, {})
+    }, {});
     return JSON.stringify(data);
   },
-  "multipart/form-data": serializeToFormData,
-}
-
+  'multipart/form-data': serializeToFormData,
+};
 
 export function sendWithXHR({
   body,
