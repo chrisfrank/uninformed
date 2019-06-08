@@ -1,6 +1,6 @@
 {
   "name": "uninformed",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Uncontrolled forms for React & Preact",
   "module": "dist/uninformed.js",
   "main": "dist/uninformed.cjs.js",

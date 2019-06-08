@@ -242,12 +242,12 @@ const SignupForm = props => (
 
 Uninformed is built as a library-agnostic
 [factory function](https://github.com/preactjs/preact/issues/408). To use it in
-Preact without a compatibility layer, import the factory directly:
+Preact without a preact-compat, import the factory directly:
 
 ```jsx
-import { createForm } from 'uninformed/factory';
-import { h } from 'preact';
-const Form = createForm(h);
+import { createForm } from 'uninformed/dist/factory';
+import { h, Component } from 'preact';
+const Form = createForm({ h, Component });
 
 export default const SignupForm = () => (
   <Form action="/api/signups">
