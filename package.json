@@ -18,6 +18,14 @@
     "start": "npm run build && nodemon example/server.js",
     "test": "tap test/**/*.test.js"
   },
+  "keywords": [
+    "react",
+    "preact",
+    "form",
+    "forms",
+    "uncontrolled",
+    "simple"
+  ],
   "author": "Chris Frank",
   "license": "ISC",
   "devDependencies": {
@@ -39,7 +47,6 @@
     "rollup": "^1.2.2",
     "rollup-plugin-babel": "^4.3.2",
     "rollup-plugin-terser": "^5.0.0",
-    "sinon": "^7.3.2",
     "tap": "^14.2.0",
     "xhr-mock": "^2.4.1"
   }
