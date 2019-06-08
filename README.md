@@ -1,6 +1,6 @@
 # Uninformed
 
-Nostalgically simple forms for React and Preact
+Nostalgically simple forms for React and Preact.
 
 ```
 npm install uninformed
