@@ -18,7 +18,7 @@ Forms in Rails do two useful things by default:
 Uninformed is a tiny library that brings these defaults to the React/Preact
 ecosystem.
 
-## Getting started:
+## Getting Started
 
 ```jsx
 import { Form } from 'uninformed';
