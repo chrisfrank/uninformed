@@ -1,6 +1,6 @@
 {
   "name": "uninformed",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Uncontrolled forms for React & Preact",
   "module": "dist/uninformed.js",
   "main": "dist/uninformed.cjs.js",
@@ -16,6 +16,7 @@
   "scripts": {
     "build": "rollup -c",
     "lint": "prettier src/**/*.js --write --single-quote --trailing-comma es5",
+    "prepublish" : "npm run build && npm run test",
     "postpublish" : "PACKAGE_VERSION=$(cat package.json | grep \\\"version\\\" | head -1 | awk -F: '{ print $2 }' | sed 's/[\",]//g' | tr -d '[[:space:]]') && git tag v$PACKAGE_VERSION && git push --tags",
     "start": "npm run build && nodemon example/server.js",
     "test": "tap test/**/*.test.js"
