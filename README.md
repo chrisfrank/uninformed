@@ -29,7 +29,7 @@ You’ll also need either React >= 16 or Preact >= 8.)
 import { Form } from 'uninformed';
 import React from 'react';
 
-export default const SignupForm = () => (
+export const SignupForm = () => (
   <Form action="/api/signups">
     <input type="email" name="email" required />
     <input type="submit" value="Sign Up" />
